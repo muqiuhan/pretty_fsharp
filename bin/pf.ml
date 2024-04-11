@@ -13,7 +13,7 @@ let _ =
         | _ :: rest -> rest)
   |> String.concat ~sep:" "
   |> Compile.run
-  |> Result.parse
+  |> Info.parse
   |> fun info_list ->
   condition := false;
   UI.show info_list

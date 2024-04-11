@@ -4,14 +4,6 @@ module Ansi = Terminal.Style
 
 let apply_color color s = Ansi.(code color) ^ s ^ Ansi.(code none)
 
-let pick_colour =
-  let i = ref 0 in
-  let colours = [| `magenta; `blue; `cyan; `green; `yellow; `red |] in
-  fun () ->
-    i := (!i + 1) mod Array.length colours;
-    Color.ansi colours.(!i)
-
-
 let unlimited_bar min_interval =
   let frames =
     let width = 10 in

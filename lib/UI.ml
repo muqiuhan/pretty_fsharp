@@ -1,4 +1,4 @@
-open Result
+open Info
 open Core
 
 let show_kind_and_code info =

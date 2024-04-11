@@ -1,6 +1,6 @@
 open Core
 
-type info = {
+type t = {
   path: string;
   line: int;
   char: int;
@@ -8,6 +8,8 @@ type info = {
   code: string;
   msg: string;
 }
+
+and info = t
 
 let filter result =
   let module Filter = Set.Make (String) in
