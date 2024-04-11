@@ -1,0 +1,4 @@
+(executable
+ (public_name pretty_fsharp)
+ (name pf)
+ (libraries pretty_fsharp))
