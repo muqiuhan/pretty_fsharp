@@ -1,3 +1,3 @@
 (library
  (name pretty_fsharp)
- (libraries unix progress core core_unix ocolor))
+ (libraries progress core core_unix ocolor))
