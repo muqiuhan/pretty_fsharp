@@ -1,4 +1,5 @@
 open Result
+open Core
 
 let show_kind_and_code info =
   match info.kind with
@@ -36,10 +37,10 @@ let show_path info = Ocolor_format.printf {|
 |} info.path info.line info.char
 
 let show info_list =
-  print_newline ();
+  Out_channel.newline stdout;
   List.iter
-    (fun info ->
-       show_path info;
-       show_kind_and_code info;
-       show_code info)
+    ~f:(fun info ->
+      show_path info;
+      show_kind_and_code info;
+      show_code info)
     info_list

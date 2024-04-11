@@ -1,16 +1,17 @@
+open Core
 open Pretty_fsharp
 
 let _ =
   let condition = ref true in
   Wait.run condition;
-  Sys.argv
+  Sys.get_argv ()
   |> Array.to_list
   |> (function
         | []
         | _ :: [] ->
             failwith "No command"
         | _ :: rest -> rest)
-  |> String.concat " "
+  |> String.concat ~sep:" "
   |> Compile.run
   |> Result.parse
   |> fun info_list ->

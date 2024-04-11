@@ -1,3 +1,4 @@
+open Core
 open Progress
 module Ansi = Terminal.Style
 
@@ -14,10 +15,10 @@ let pick_colour =
 let unlimited_bar min_interval =
   let frames =
     let width = 10 in
-    List.init width (fun i ->
+    List.init width ~f:(fun i ->
       String.concat
-        ""
-        (List.init width (fun x ->
+        ~sep:""
+        (List.init width ~f:(fun x ->
            if x = i then
              apply_color (Ansi.fg @@ Color.ansi `cyan) ">>"
            else
@@ -31,11 +32,11 @@ let run condition =
   with_reporter
     (unlimited_bar (Some (Progress.Duration.of_ms 80.)))
     (fun report ->
-       Thread.create
+       Caml_threads.Thread.create
          (fun () ->
             while !condition do
               report ();
-              Thread.delay 0.1
+              Caml_threads.Thread.delay 0.1
             done)
          ()
        |> ignore)
