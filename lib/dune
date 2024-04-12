@@ -1,3 +1,5 @@
 (library
  (name pretty_fsharp)
+ (flags
+  (-w -21))
  (libraries progress core core_unix ocolor))

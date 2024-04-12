@@ -10,13 +10,21 @@ let show_kind_and_code info =
 
 let show_code info =
   let file_value = info.path |> Core.In_channel.read_lines |> Array.of_list in
-  let pre, curr, next = info.line, info.line + 1, info.line + 2 in
-  let pre_line, curr_line, next_line = file_value.(pre), file_value.(curr), file_value.(next) in
+  let pre, curr, next = info.line - 2, info.line - 1, info.line in
+  let pre_line, curr_line, next_line =
+    ( (if pre < 0 then "" else file_value.(pre)),
+      file_value.(curr),
+      if next > Array.length file_value then "" else file_value.(next) )
+  in
+  let curr_line_pre, curr_line_rest =
+    ( String.sub curr_line ~pos:0 ~len:(info.char - 1),
+      String.sub curr_line ~pos:(info.char - 1) ~len:(String.length curr_line - info.char) )
+  in
   Ocolor_format.printf
     {|
 
 @{<grey>%d | %s@}
-@{<cyan>@{<hl,bold>%d@}@} | @{<white>@{<hl>%s@}@}
+@{<cyan>@{<hl,bold>%d@}@} | @{<grey>%s@}@{<white>@{<hl,ul,bold>%s@}@}
 %s |%s￮ @{<cyan>@{<ul>%s@}@}
 @{<grey>%d | %s@}
 
@@ -24,7 +32,8 @@ let show_code info =
     pre
     pre_line
     curr
-    curr_line
+    curr_line_pre
+    curr_line_rest
     (String.make (string_of_int curr |> String.length) ' ')
     (String.make info.char ' ')
     info.msg

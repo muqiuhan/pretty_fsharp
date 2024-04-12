@@ -1,4 +1,4 @@
 (executable
- (public_name pretty_fsharp)
- (name pf)
+ (public_name pf)
+ (name main)
  (libraries pretty_fsharp))
